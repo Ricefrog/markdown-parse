@@ -128,9 +128,37 @@ public class MarkdownParseTest {
 		assertEquals(correctOutput8,links8);
 	}
 
-	/*
 	@Test
-	public void testFiles1to8() throws IOException, NoSuchFileException {
+	public void snippet1() throws IOException, NoSuchFileException {
+        List<String> correctOutput = List.of("`google.com", "google.com", "ucsd.edu");
+        Path fileName = Path.of("snippet1.md");
+        // read the file contents into a string
+	    String contents = Files.readString(fileName);
+        // run getLinks on the contents of the file
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(correctOutput, links);
 	}
-	*/
+
+	@Test
+	public void snippet2() throws IOException, NoSuchFileException {
+        List<String> correctOutput = List.of("a.com", "a.com(())", "example.com");
+        Path fileName = Path.of("snippet2.md");
+        // read the file contents into a string
+	    String contents = Files.readString(fileName);
+        // run getLinks on the contents of the file
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(correctOutput, links);
+	}
+
+	@Test
+	public void snippet3() throws IOException, NoSuchFileException {
+        List<String> correctOutput = List.of("https://ucsd-cse15l-w22.github.io/");
+
+        Path fileName = Path.of("snippet3.md");
+        // read the file contents into a string
+	    String contents = Files.readString(fileName);
+        // run getLinks on the contents of the file
+        ArrayList<String> links = MarkdownParse.getLinks(contents);
+        assertEquals(correctOutput, links);
+	}
 }
