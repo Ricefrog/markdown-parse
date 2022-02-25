@@ -35,7 +35,14 @@ public class MarkdownParse {
                 } else {
                     if (curr == ')') {
                         end = currentIndex;
-                        toReturn.add(markdown.substring(start + 1, end));
+						String link = markdown.substring(start+1, end).trim();
+						if (!(
+							link.contains(" ") ||
+							link.contains("\t") ||
+							link.contains("\n"))
+						) {
+                        	toReturn.add(markdown.substring(start + 1, end));
+						}
                         bracketTracker.pop();
                         findLink = false;
                     }
