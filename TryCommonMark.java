@@ -1,6 +1,7 @@
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import java.util.*;
 
 class WordCountVisitor extends AbstractVisitor {
 	int wordCount = 0;
@@ -17,6 +18,15 @@ class WordCountVisitor extends AbstractVisitor {
 	}
 }
 
+class LinkVisitor extends AbstractVisitor {
+	ArrayList<String> links = new ArrayList<>();
+
+	@Override
+	public void visit(Link link) {
+		links.add(link.getDestination());
+	}
+}
+
 class TryCommonMark {
 	public static void main(String[] args) {
 		/*
@@ -27,11 +37,11 @@ class TryCommonMark {
 		*/
 
 		Parser parser = Parser.builder().build();
-		Node node = parser.parse("Example\n=======\n\nSome more text");
-		WordCountVisitor visitor = new WordCountVisitor();
+		Node node = parser.parse("[gay](https://superhands.com)");
+		LinkVisitor visitor = new LinkVisitor();
 		node.accept(visitor);
-		int wordCount = visitor.wordCount;  // 4
-		System.out.printf("Word count: %d\n", wordCount);
+		ArrayList<String> links = visitor.links;  // 4
+		System.out.println(links);
  
 	}
 }
