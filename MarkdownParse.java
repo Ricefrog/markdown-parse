@@ -84,7 +84,17 @@ public class MarkdownParse {
             if(lastDot == -1 || !p.toString().substring(lastDot).equals(".md")) {
                 return result;
             }
-            ArrayList<String> links = getLinks(Files.readString(p));
+
+			String contents = Files.readString(p);
+			int forwardSquare = contents.indexOf("[");
+			int backwardSquare = contents.indexOf("]");
+			int forwardParen = contents.indexOf("(");
+			int backwardParen = contents.indexOf(")");
+			if (
+				!(forwardSquare == -1 || backwardSquare == -1 || forwardParen == -1 || backwardParen == -1)) {
+				System.out.printf("%s may have links.\n", p.toString());
+			}
+            ArrayList<String> links = getLinks(contents);
             result.put(dirOrFile.getPath(), links);
             return result;
         }
